@@ -15,7 +15,5 @@ namespace ExamProject
         void RemoveLast();
         bool Find(T value);
         int Lenght();
-        Node<T> First();
-        Node<T> Last();
     }
 }
