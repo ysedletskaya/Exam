@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace ExamProject
 {
-    public interface ILinkedList
+    public interface ILinkedList<T>
     {
-        void AddFirst(int value);
-        void AddLast(int value);
-        void Remove(int value);
+        void AddFirst(T value);
+        void AddLast(T value);
+        void Remove(T value);
         void RemoveFirst();
         void RemoveLast();
-        bool Find(int value);
+        bool Find(T value);
         int Lenght();
+        Node<T> First();
+        Node<T> Last();
     }
 }
