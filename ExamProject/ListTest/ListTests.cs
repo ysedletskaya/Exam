@@ -36,18 +36,18 @@ namespace ListTest
         public void TestRemove()
         {
             ILinkedList<int> list = PrepareListof10Int();
-            list.Remove(10);
+            list.Remove(8);
             bool result = false;
-            Assert.AreEqual(result, list.Find(10), "It is not there");
+            Assert.AreEqual(result, list.Find(8), "It is not there");
         }
 
         [TestMethod]
         public void TestListValidity()
         {
             ILinkedList<string> list = PrepareListof4Strings();
-            bool works = list.First().Value == "one";
-            works = works & list.First().Next.Value == "two";
-            works = works & list.First().Next.Next.Value == "three";
+            bool works = list.First().value == "one";
+            works = works & list.First().next.value == "two";
+            works = works & list.First().next.next.value == "three";
 
             Assert.IsTrue(works, "The list is wrong!");
         }

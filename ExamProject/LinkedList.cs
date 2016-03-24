@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExamProject
 {
-    class LinkedList<T> : IPrintable, ILinkedList<T> where T: IComparable<T>
+    public class LinkedList<T> : IPrintable, ILinkedList<T> where T: IComparable<T>
     {
         protected Node<T> first;
         protected Node<T> last;
@@ -19,7 +19,7 @@ namespace ExamProject
             this.count = 0;
         }
 
-        void AddFirst(T value)
+        public void AddFirst(T value)
         {
             Node<T> newNode = new Node<T>(value);
             if (first == null)
@@ -35,7 +35,7 @@ namespace ExamProject
             count++;
         }
 
-        void AddLast(T value)
+        public void AddLast(T value)
         {
             Node<T> newNode = new Node<T>(value);
 
@@ -52,7 +52,7 @@ namespace ExamProject
             count++;
         }
 
-        void Remove(T value)
+        public void Remove(T value)
         {
             current = first;
             while (current != null)
@@ -67,13 +67,21 @@ namespace ExamProject
                     {
                         current.next.previous = null;
                     }
+                    if (current.previous != null)
+                    {
+                        current.previous.next = current.next;
+                    }
+                    else
+                    {
+                        current.previous.next = null;
+                    }
                     count--;
                 }
                 current = current.next;
             }           
         }
 
-        void RemoveFirst()
+        public void RemoveFirst()
         {
             if (first == null)
             {
@@ -90,7 +98,7 @@ namespace ExamProject
             }
         }
 
-        void RemoveLast()
+        public void RemoveLast()
         {
             if (last == null)
             {
@@ -107,7 +115,7 @@ namespace ExamProject
             }        
         }
 
-        bool Find(T value)
+        public bool Find(T value)
         {
             current = first;
             while (current != null)
@@ -121,10 +129,31 @@ namespace ExamProject
             return false;      
         }
 
-        int Lenght()
+        public int Lenght()
         {
             return count;
         }
         
+        public Node<T> First()
+        {
+            return first;
+        }
+
+        public Node<T> Last()
+        {
+            return last;
+        }
+
+        public void Print()
+        {
+            current = first;
+            Console.Write("{");
+            while (current != null)
+            {
+                Console.Write(" {0} ", current.value);
+                current = current.next;
+            }
+            Console.WriteLine("}");
+        }
     }
 }
