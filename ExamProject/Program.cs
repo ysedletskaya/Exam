@@ -13,9 +13,9 @@ namespace ExamProject
             LinkedList<int> list = new LinkedList<int>();
             list.AddFirst(1);
             list.AddLast(2);
-            list.AddLast(3);
+            list.AddLast(43);
             list.AddLast(4);
-            list.AddLast(5);
+            list.AddLast(23);
             list.AddLast(6);
             list.AddLast(7);
             list.AddFirst(8);
@@ -24,7 +24,10 @@ namespace ExamProject
             list.Print();
             list.Sort();
             list.Print();
-
+            foreach (int value in list)
+            {
+                Console.WriteLine("From foreach - {0} ", value);
+            }
         }
     }
 }

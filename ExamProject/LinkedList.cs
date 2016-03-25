@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExamProject
 {
-    public class LinkedList<T> : IPrintable, ISortable, ILinkedList<T> where T: IComparable<T>
+    public class LinkedList<T> : IPrintable, ISortable, IEnumerable<T>, ILinkedList<T> where T: IComparable<T>
     {
         protected Node<T> first;
         protected Node<T> last;
@@ -17,6 +17,21 @@ namespace ExamProject
         {
             this.first = this.last = this.current = null;
             this.count = 0;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            current = first;
+            while (current != null)
+            {
+                yield return current.value;
+                current = current.next;
+            }
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         public void AddFirst(T value)
@@ -158,10 +173,9 @@ namespace ExamProject
         
         private void Swap(ref Node<T> node1, ref Node<T> node2)
         {
-            Node<T> temp = new Node<T>(default(T));
-            temp = node1;
-            node1 = node2;
-            node2 = temp;
+            T temp = node1.value;
+            node1.value = node2.value;
+            node2.value = temp;
         }
 
         private bool IsFirst(Node<T> node)
@@ -184,37 +198,18 @@ namespace ExamProject
 
         public void Sort()
         {
-            current = first;
-            int iteration = 1;
-            while (!IsLast(current))
+            for (int j = 0; j < count - 1; j++)
             {
-                while (!IsLast(current))
+                current = first;
+                for (int i = 0; i < count - j - 1; i++)
                 {
+                    Node<T> temp = new Node<T>(default(T));
+                    temp = current.next; 
                     if (current.value.CompareTo(current.next.value) > 0)
                     {
-                        Node<T> temp = new Node<T>(default(T));
-                        temp = current.next;
-                        if (IsFirst(current))
-                        {
-                            first = temp;
-                        }
-                        if (IsLast(temp))
-                        {
-                            last = current;
-                        }
                         Swap(ref current, ref temp);
                     }
-                    iteration++;
                     current = current.next;
-                }
-                if ((count - iteration) <= 1)
-                {
-                    current = first;
-                    iteration = 1;
-                }
-                else
-                {
-                    current = last;
                 }
             }
         }
