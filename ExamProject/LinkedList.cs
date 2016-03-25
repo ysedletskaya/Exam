@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExamProject
 {
-    public class LinkedList<T> : IPrintable, ILinkedList<T> where T: IComparable<T>
+    public class LinkedList<T> : IPrintable, ISortable, ILinkedList<T> where T: IComparable<T>
     {
         protected Node<T> first;
         protected Node<T> last;
@@ -154,6 +154,69 @@ namespace ExamProject
                 current = current.next;
             }
             Console.WriteLine("}");
+        }
+        
+        private void Swap(ref Node<T> node1, ref Node<T> node2)
+        {
+            Node<T> temp = new Node<T>(default(T));
+            temp = node1;
+            node1 = node2;
+            node2 = temp;
+        }
+
+        private bool IsFirst(Node<T> node)
+        {
+            if (node.previous == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsLast(Node<T> node)
+        {
+            if ((node == null) || (node.next == null))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void Sort()
+        {
+            current = first;
+            int iteration = 1;
+            while (!IsLast(current))
+            {
+                while (!IsLast(current))
+                {
+                    if (current.value.CompareTo(current.next.value) > 0)
+                    {
+                        Node<T> temp = new Node<T>(default(T));
+                        temp = current.next;
+                        if (IsFirst(current))
+                        {
+                            first = temp;
+                        }
+                        if (IsLast(temp))
+                        {
+                            last = current;
+                        }
+                        Swap(ref current, ref temp);
+                    }
+                    iteration++;
+                    current = current.next;
+                }
+                if ((count - iteration) <= 1)
+                {
+                    current = first;
+                    iteration = 1;
+                }
+                else
+                {
+                    current = last;
+                }
+            }
         }
     }
 }
