@@ -70,30 +70,29 @@ namespace ExamProject
         public void Remove(T value)
         {
             current = first;
-            while (current != null)
+            if (current.value.CompareTo(value) == 0)
             {
-                if (current.value.CompareTo(value) == 0)
+                RemoveFirst();
+            } 
+            current = last;
+            if (current.value.CompareTo(value) == 0)
+            {
+                RemoveLast();
+            }
+            else
+            {
+                current = first.next;
+                while (current.next != null)
                 {
-                    if (current.next != null)
+                    if (current.value.CompareTo(value) == 0)
                     {
                         current.next.previous = current.previous;
-                    }
-                    else
-                    {
-                        current.next.previous = null;
-                    }
-                    if (current.previous != null)
-                    {
                         current.previous.next = current.next;
+                        count--;
                     }
-                    else
-                    {
-                        current.previous.next = null;
-                    }
-                    count--;
+                    current = current.next;
                 }
-                current = current.next;
-            }           
+            }
         }
 
         public void RemoveFirst()
@@ -176,24 +175,6 @@ namespace ExamProject
             T temp = node1.value;
             node1.value = node2.value;
             node2.value = temp;
-        }
-
-        private bool IsFirst(Node<T> node)
-        {
-            if (node.previous == null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool IsLast(Node<T> node)
-        {
-            if ((node == null) || (node.next == null))
-            {
-                return true;
-            }
-            return false;
         }
 
         public void Sort()
